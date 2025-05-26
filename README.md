@@ -1,7 +1,7 @@
 # Timesheet Backend Service
 
 ## Overview
-This project is a minimal backend service for a contractor timesheet submission system. It supports three user roles: Admin, Recruiter, and Contractor. Each role has specific functionalities, allowing for efficient management of timesheets and user interactions.
+This project is a backend service for a contractor timesheet submission system. It supports three user roles: Admin, Recruiter, and Contractor. Each role has specific functionalities, allowing for efficient management of timesheets and user interactions.
 
 ## Architecture
 The application is built using Node.js and Express. It follows a modular structure with separate directories for controllers, middleware, models, routes, and utilities.
@@ -41,7 +41,7 @@ The application is built using Node.js and Express. It follows a modular structu
    ```
 
 3. **Configure environment variables**:
-   Copy `.env.example` to `.env` and fill in the required values, such as database connection strings and JWT secrets.
+   In`.env` and fill in the required values, such as database connection strings and JWT secrets.
 
 4. **Run the application**:
    ```
@@ -58,6 +58,5 @@ Refer to `api-spec.yaml` for detailed API specifications, including endpoints, r
 - The application uses JWT for authentication and authorization.
 - A MongoDB database is assumed for data storage.
 - The application is designed for a development environment; production configurations may vary.
+- Contractors are considered as candidates for Recruiters
 
-## License
-This project is licensed under the MIT License.
