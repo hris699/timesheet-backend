@@ -21,11 +21,6 @@ const userSchema = new Schema({
         ref: 'User',
         required: function() { return this.role === 'Contractor'; }
     },
-    status: {
-        type: String,
-        enum: ['pending', 'approved', 'rejected'],
-        default: 'pending',
-    },
     createdAt: {
         type: Date,
         default: Date.now
