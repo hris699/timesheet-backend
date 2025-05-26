@@ -18,8 +18,7 @@ const userSchema = new Schema({
     },
     recruiter: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: function() { return this.role === 'Contractor'; }
+        ref: 'User'
     },
     createdAt: {
         type: Date,

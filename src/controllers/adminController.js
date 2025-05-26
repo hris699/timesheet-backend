@@ -1,4 +1,5 @@
 import Project from '../models/Project.js';
+import { Parser as Json2csvParser } from 'json2csv';
 
 class AdminController {
     constructor(timesheetModel) {
@@ -14,11 +15,25 @@ class AdminController {
         }
     }
 
-    async exportReports(req, res) {
+    async viewAllProjects(req, res) {
         try {
-            const timesheets = await this.timesheetModel.find({});
-            // Logic to export reports (e.g., to CSV) would go here
-            res.status(200).json({ message: 'Reports exported successfully', data: timesheets });
+            const projects = await Project.find({});
+            res.status(200).json(projects);
+        } catch (error) {
+            res.status(500).json({ message: 'Error retrieving projects', error });
+        }
+    }
+
+        async exportReports(req, res) {
+        try {
+            const timesheets = await this.timesheetModel.find({}).lean();
+            const fields = Object.keys(timesheets[0] || {});
+            const json2csvParser = new Json2csvParser({ fields });
+            const csv = json2csvParser.parse(timesheets);
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('timesheet_reports.csv');
+            res.status(200).send(csv);
         } catch (error) {
             res.status(500).json({ message: 'Error exporting reports', error });
         }

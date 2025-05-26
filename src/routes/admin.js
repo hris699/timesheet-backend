@@ -18,7 +18,7 @@ router.post('/projects', auth.authenticateJWT, (req, res) => adminController.cre
 
 
 // Route to view all projects   
-router.get('/projects', auth.authenticateJWT, auth.authorizeRoles('admin'), (req, res) => adminController.viewAllProjects(req, res));
+router.get('/projects', auth.authenticateJWT, (req, res) => adminController.viewAllProjects(req, res));
 
 
 export default router;

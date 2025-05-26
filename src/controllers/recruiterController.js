@@ -22,12 +22,8 @@ class RecruiterController {
                 console.warn(`[WARN] Unauthorized approve attempt by recruiter ${req.user.id} for candidate ${id}`);
                 return res.status(403).json({ message: 'Unauthorized action' });
             }
-<<<<<<< HEAD
-            candidate.status = 'approved'; 
-=======
             timesheet.status = 'approved'; 
->>>>>>> d2ac3c7500ab263f09e59c2ea280f722702625ca
-            await candidate.save();
+            await timesheet.save();
             res.status(200).json({ message: 'Candidate approved successfully', candidate });
         } catch (error) {
             console.error(`[ERROR] Approving candidate ${req.params.id} by recruiter ${req.user.id}:`, error);
