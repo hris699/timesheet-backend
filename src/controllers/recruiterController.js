@@ -1,9 +1,10 @@
-import User from '../models/User.js'; // Assuming User model has necessary methods
+import User from '../models/User.js'; 
 
 class RecruiterController {
     async viewCandidates(req, res) {
         try {
-            const recruiterId = req.user.id; // Assuming user ID is stored in JWT
+            console.log(`req>>>user: ${req.user}`);
+            const recruiterId = req.user.id; 
             const candidates = await User.find({ recruiter: recruiterId }); // Fetch candidates recruited by this recruiter
             res.status(200).json(candidates);
         } catch (error) {
@@ -20,7 +21,7 @@ class RecruiterController {
                 console.warn(`[WARN] Unauthorized approve attempt by recruiter ${req.user.id} for candidate ${id}`);
                 return res.status(403).json({ message: 'Unauthorized action' });
             }
-            candidate.status = 'approved'; // Assuming there's a status field
+            candidate.status = 'approved'; 
             await candidate.save();
             res.status(200).json({ message: 'Candidate approved successfully', candidate });
         } catch (error) {

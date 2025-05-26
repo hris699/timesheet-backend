@@ -26,7 +26,7 @@ class AuthController {
         let { email, password, role, recruiter } = req.body;
         email = email?.trim().toLowerCase();
         try {
-            // If registering a contractor, recruiter must be provided
+            
             if (role === 'Contractor' && !recruiter) {
                 return res.status(400).json({ message: 'Recruiter is required for contractor registration.' });
             }

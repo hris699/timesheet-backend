@@ -3,15 +3,13 @@ import Timesheet from '../models/Timesheet.js';
 class ContractorController {
     async submitTimesheet(req, res) {
         const { projectId, weekEnding, hours, notes } = req.body;
-        const contractorId = req.user.id; // User ID from JWT
+        const contractorId = req.user.id; 
 
         try {
-            // Validate input
             if (!projectId || !weekEnding || typeof hours !== 'number') {
                 return res.status(400).json({ message: 'projectId, weekEnding, and hours are required.' });
             }
 
-            // Create a new timesheet entry
             const newTimesheet = await Timesheet.create({
                 contractorId,
                 projectId,
