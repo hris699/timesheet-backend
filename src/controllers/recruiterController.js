@@ -1,10 +1,11 @@
-import User from '../models/User.js'; // Assuming User model has necessary methods
+import User from '../models/User.js'; 
+import Timesheet from '../models/Timesheet.js'; 
 
 class RecruiterController {
     async viewCandidates(req, res) {
         try {
-            const recruiterId = req.user.id; // Assuming user ID is stored in JWT
-            const candidates = await User.find({ recruiter: recruiterId }); // Fetch candidates recruited by this recruiter
+            const recruiterId = req.user.id; 
+            const candidates = await User.find({ recruiter: recruiterId }); 
             res.status(200).json(candidates);
         } catch (error) {
             console.error(`[ERROR] Fetching candidates for recruiter ${req.user.id}:`, error);
@@ -16,11 +17,12 @@ class RecruiterController {
         try {
             const { id } = req.params;
             const candidate = await User.findById(id);
+            const timesheet = await Timesheet.findOne({ contractorId: candidate.id });
             if (!candidate || candidate.recruiter.toString() !== req.user.id) {
                 console.warn(`[WARN] Unauthorized approve attempt by recruiter ${req.user.id} for candidate ${id}`);
                 return res.status(403).json({ message: 'Unauthorized action' });
             }
-            candidate.status = 'approved'; // Assuming there's a status field
+            timesheet.status = 'approved'; 
             await candidate.save();
             res.status(200).json({ message: 'Candidate approved successfully', candidate });
         } catch (error) {
@@ -37,7 +39,7 @@ class RecruiterController {
                 console.warn(`[WARN] Unauthorized reject attempt by recruiter ${req.user.id} for candidate ${id}`);
                 return res.status(403).json({ message: 'Unauthorized action' });
             }
-            candidate.status = 'rejected'; // Assuming there's a status field
+            candidate.status = 'rejected'; 
             await candidate.save();
             res.status(200).json({ message: 'Candidate rejected successfully', candidate });
         } catch (error) {
