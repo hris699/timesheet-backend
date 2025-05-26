@@ -25,6 +25,17 @@ class ContractorController {
             return res.status(500).json({ message: 'Error submitting timesheet.', error: error.message });
         }
     }
+
+    async getTimesheets(req, res) {
+        try {
+            const contractorId = req.user.id; // User ID from JWT
+            const timesheets = await Timesheet.find({ contractorId: contractorId });
+            res.status(200).json(timesheets);
+        } catch (error) {
+            console.error('[ERROR] Fetching timesheets:', error);
+            res.status(500).json({ message: 'Error fetching timesheets.', error: error.message });
+        }
+    }
 }
 
 export default new ContractorController();
